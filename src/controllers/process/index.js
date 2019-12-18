@@ -43,8 +43,9 @@ export default class ProcessController {
 
     // Create ElastAlert index if it doesn't exist yet
     logger.info('Creating index');
-    var indexCreate = spawnSync('python', ['-m', 'elastalert.create_index', '--index', config.get('writeback_index'), '--old-index', ''], {
-      cwd: this._elastalertPath
+    var indexCreate = spawnSync('python3', ['-m', 'elastalert.create_index', '--index', config.get('writeback_index'), '--old-index', ''], {
+      cwd: this._elastalertPath,
+      env: {PYTHONPATH: '/usr/lib/python3.6/site-packages/'}
     });
 
     // Redirect stdin/stderr to logger
@@ -92,7 +93,7 @@ export default class ProcessController {
 
     logger.info('Starting elastalert with arguments ' + (startArguments.join(' ') || '[none]'));
 
-    this._process = spawn('python', ['-m', 'elastalert.elastalert'].concat(startArguments), {
+    this._process = spawn('python3', ['-m', 'elastalert.elastalert'].concat(startArguments), {
       cwd: this._elastalertPath
     });
 
