@@ -57,8 +57,9 @@ export default class TestController {
 
 
           try {
-            let testProcess = spawn('python', processOptions, {
-              cwd: self._elastalertPath
+            let testProcess = spawn('python3', processOptions, {
+              cwd: self._elastalertPath,
+              env: {PYTHONPATH: '/usr/lib/python3.6/site-packages/'}
             });
 
             // When the websocket closes we kill the test process
